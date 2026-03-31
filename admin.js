@@ -8,11 +8,7 @@ const apiOrigin = (() => {
         return "http://localhost:8080";
     }
 
-    if (window.location.port === "8080") {
-        return window.location.origin;
-    }
-
-    return `${window.location.protocol}//${window.location.hostname}:8080`;
+    return window.location.origin;
 })();
 const buildApiUrl = (path) => `${apiOrigin}/${path.replace(/^\/+/, "")}`;
 

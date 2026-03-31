@@ -3,6 +3,7 @@ const pathName = window.location.pathname;
 const normalizeApiBase = (value) => String(value || "").replace(/\/+$/, "");
 const computeApiOrigins = () => {
     const origins = [];
+    const sameOrigin = normalizeApiBase(window.location.origin);
 
     if (window.SMARTSERVE_API_BASE) {
         origins.push(normalizeApiBase(window.SMARTSERVE_API_BASE));
@@ -14,17 +15,18 @@ const computeApiOrigins = () => {
         return [...new Set(origins)];
     }
 
-    const nodeOrigin = `${window.location.protocol}//${window.location.hostname}:8080`;
-    const loopbackOrigin = `${window.location.protocol}//127.0.0.1:8080`;
-    const sameOrigin = normalizeApiBase(window.location.origin);
+    origins.push(sameOrigin);
 
-    // Prefer Node backend first for WAMP/Apache-hosted frontend setups.
-    if (window.location.port === "8080") {
-        origins.push(sameOrigin);
-    } else {
+    // Keep localhost fallbacks for older local WAMP setups.
+    if (!window.location.port || window.location.port !== "8080") {
+        const nodeOrigin = `${window.location.protocol}//${window.location.hostname}:8080`;
         origins.push(nodeOrigin);
-        origins.push(loopbackOrigin);
-        origins.push(sameOrigin);
+        if (window.location.hostname !== "127.0.0.1" && window.location.hostname !== "localhost") {
+            origins.push(`${window.location.protocol}//127.0.0.1:8080`);
+        }
+        if (window.location.hostname !== "localhost") {
+            origins.push(`${window.location.protocol}//localhost:8080`);
+        }
     }
     return [...new Set(origins)];
 };

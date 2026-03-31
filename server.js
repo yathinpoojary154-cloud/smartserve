@@ -7,27 +7,55 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 8080;
+const PORT = parseInt(process.env.PORT || '8080', 10);
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const SESSION_SECRET = process.env.SESSION_SECRET || 'smartserve-secret-key';
+const APP_ORIGIN = (process.env.APP_ORIGIN || '').replace(/\/+$/, '');
+const isProduction = NODE_ENV === 'production';
+
+const parseAllowedOrigins = () => {
+  if (!APP_ORIGIN) return true;
+  return APP_ORIGIN
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+};
+
+const allowedOrigins = parseAllowedOrigins();
 
 // ─── Database ────────────────────────────────────────────────────────────────
 const pool = mysql.createPool({
-  host: '127.0.0.1',
-  port: 3306,
-  user: 'root',
-  password: '',
-  database: 'smartserve',
+  host: process.env.DB_HOST || 'smartserve.c3uk2kciuri9.ap-south-1.rds.amazonaws.com',
+  port: parseInt(process.env.DB_PORT || '3306', 10),
+  user: process.env.DB_USER || 'admin',
+  password: process.env.DB_PASSWORD || 'BAVIHOOMI05',
+  database: process.env.DB_NAME || 'smartserve',
   waitForConnections: true,
   connectionLimit: 10,
 });
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
-app.use(cors({ origin: true, credentials: true }));
+app.set('trust proxy', 1);
+app.use(cors({
+  origin(origin, callback) {
+    if (allowedOrigins === true || !origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS origin not allowed.'));
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use(session({
-  secret: 'smartserve-secret-key',
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { httpOnly: true, maxAge: 86400000 }
+  cookie: {
+    httpOnly: true,
+    maxAge: 86400000,
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction
+  }
 }));
 
 // Serve frontend — find public folder robustly
@@ -301,7 +329,13 @@ app.listen(PORT, () => {
   console.log('');
   console.log('  ================================');
   console.log('   SmartServe is running!');
-  console.log(`   Open: http://localhost:${PORT}/`);
+  console.log(`   Port: ${PORT}`);
+  if (APP_ORIGIN) {
+    console.log(`   Allowed origin(s): ${APP_ORIGIN}`);
+  } else {
+    console.log(`   Open: http://localhost:${PORT}/`);
+  }
+  console.log(`   Database host: ${process.env.DB_HOST || '127.0.0.1'}`);
   console.log('  ================================');
   console.log('');
 });
