@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartServe Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page-shell admin-page-shell">
+    <header class="topbar">
+        <a class="brand" href="index.html">
+            <span class="brand-mark">S</span>
+            <div>
+                <strong>SmartServe Admin</strong>
+                <span>Service operations, bookings, and review signals</span>
+            </div>
+        </a>
+        <nav class="topnav">
+            <a href="index.html">Website</a>
+            <a href="#services-admin">Add service</a>
+            <a href="#bookings-admin">Bookings</a>
+            <a href="#reviews-admin">Reviews</a>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <section class="section-shell section-block">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Operations overview</p>
+                    <h2>Watch bookings, service inventory, and customer trust</h2>
+                </div>
+                <p class="section-copy">Admin data updates from the same Java and SQL backend that powers the customer site.</p>
+            </div>
+
+            <div class="metrics-row admin-metrics">
+                <article class="surface-card metric-box">
+                    <span>Total bookings</span>
+                    <strong id="totalBookings">0</strong>
+                </article>
+                <article class="surface-card metric-box">
+                    <span>Customers</span>
+                    <strong id="totalCustomers">0</strong>
+                </article>
+                <article class="surface-card metric-box">
+                    <span>Active services</span>
+                    <strong id="activeServices">0</strong>
+                </article>
+                <article class="surface-card metric-box">
+                    <span>Revenue</span>
+                    <strong id="totalRevenue">Rs 0.00</strong>
+                </article>
+                <article class="surface-card metric-box">
+                    <span>Average rating</span>
+                    <strong id="averageRating">0.0</strong>
+                </article>
+                <article class="surface-card metric-box">
+                    <span>Total reviews</span>
+                    <strong id="totalReviews">0</strong>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-shell admin-grid">
+            <article id="services-admin" class="surface-card form-card wide">
+                <div class="section-head compact-head">
+                    <div>
+                        <p class="eyebrow">Add service</p>
+                        <h2>Create a new listing</h2>
+                    </div>
+                    <p class="section-copy">New services appear in the customer catalog after successful creation.</p>
+                </div>
+                <form id="serviceForm">
+                    <input type="text" name="name" placeholder="Service name" required>
+                    <input type="text" name="category" placeholder="Category" required>
+                    <textarea name="description" rows="4" placeholder="Describe the service" required></textarea>
+                    <div class="form-split">
+                        <input type="number" name="basePrice" step="0.01" placeholder="Base price" required>
+                        <input type="number" name="serviceCharge" step="0.01" placeholder="Service charge" required>
+                    </div>
+                    <input type="number" name="durationMinutes" placeholder="Duration in minutes" required>
+                    <button class="primary-btn" type="submit">Add service</button>
+                </form>
+            </article>
+
+            <article id="bookings-admin" class="surface-card bookings-card">
+                <div class="compact-head">
+                    <div>
+                        <p class="eyebrow">Bookings</p>
+                        <h2>Recent activity</h2>
+                    </div>
+                </div>
+                <div id="adminBookings" class="booking-list"></div>
+            </article>
+        </section>
+
+        <section id="reviews-admin" class="section-shell section-block">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Review feed</p>
+                    <h2>What customers are saying</h2>
+                </div>
+                <p class="section-copy">Recent paid-booking reviews appear here for a quick quality snapshot.</p>
+            </div>
+            <div id="adminReviews" class="review-grid"></div>
+        </section>
+    </main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="admin.js"></script>
+</body>
+</html>

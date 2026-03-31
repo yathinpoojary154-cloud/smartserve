@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartServe | Trusted Home Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="topbar">
+        <a class="brand" href="#home">
+            <span class="brand-mark">S</span>
+            <div>
+                <strong>SmartServe</strong>
+                <span>Home services with clear pricing and dependable support</span>
+            </div>
+        </a>
+        <nav class="topnav">
+            <a href="#services">Services</a>
+            <a href="#experience">How it works</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#booking">Booking</a>
+            <a href="#auth">Sign in</a>
+            <a href="admin.html">Admin</a>
+            <button id="logoutBtn" class="ghost-btn hidden" type="button">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero section-shell hero-shell">
+            <div class="hero-copy">
+                <p class="eyebrow">Smart Home Service Platform</p>
+                <h1>Book trusted help for your home in a few clean steps.</h1>
+                <p class="hero-text">SmartServe brings service discovery, live pricing, secure booking, payments, and customer reviews into one polished experience built for real use.</p>
+                <div class="hero-actions">
+                    <a class="primary-btn" href="#booking">Book a service</a>
+                    <a class="ghost-btn" href="#services">Explore services</a>
+                </div>
+                <div class="trust-strip">
+                    <span>Verified professionals</span>
+                    <span>Transparent rates</span>
+                    <span>Fast scheduling</span>
+                    <span>Review-backed trust</span>
+                </div>
+            </div>
+
+            <div class="hero-panel surface-card">
+                <div class="hero-panel-head">
+                    <span>Live service experience</span>
+                    <span class="pill pill-blue">Always on</span>
+                </div>
+                <div class="spotlight-grid">
+                    <article class="spotlight-card tint-blue">
+                        <strong>Choose confidently</strong>
+                        <p>Browse services with pricing, duration, and customer ratings in one place.</p>
+                    </article>
+                    <article class="spotlight-card tint-green">
+                        <strong>Book faster</strong>
+                        <p>Pick a slot, add your address, and track your booking from the same screen.</p>
+                    </article>
+                    <article class="spotlight-card tint-yellow">
+                        <strong>Pay securely</strong>
+                        <p>Choose to pay now during booking or complete payment later from your account.</p>
+                    </article>
+                    <article class="spotlight-card tint-red">
+                        <strong>Review the service</strong>
+                        <p>Share your experience so the platform keeps getting more useful and trustworthy.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section-shell grid-three soft-grid">
+            <article class="surface-card feature-card">
+                <p class="eyebrow">01</p>
+                <h2>Discover services</h2>
+                <p>Browse categories, search quickly, and compare estimated cost before booking.</p>
+            </article>
+            <article class="surface-card feature-card">
+                <p class="eyebrow">02</p>
+                <h2>Schedule cleanly</h2>
+                <p>Choose your service, preferred time, address, and payment option in one compact flow.</p>
+            </article>
+            <article class="surface-card feature-card">
+                <p class="eyebrow">03</p>
+                <h2>Build trust</h2>
+                <p>Customers can manage bookings, complete payments, and add reviews from the same account.</p>
+            </article>
+        </section>
+
+        <section id="services" class="section-shell section-block">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Services</p>
+                    <h2>Choose from live services</h2>
+                </div>
+                <p id="serviceStatus" class="section-copy">Loading available services...</p>
+            </div>
+
+            <div class="service-toolbar surface-card toolbar-card">
+                <input id="serviceSearch" type="search" placeholder="Search services like AC, plumbing, electrician">
+                <div id="categoryFilters" class="chip-row"></div>
+            </div>
+
+            <div id="servicesGrid" class="service-grid"></div>
+        </section>
+
+        <section id="reviews" class="section-shell section-block review-block">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Customer Reviews</p>
+                    <h2>Feedback that keeps the platform honest</h2>
+                </div>
+                <p class="section-copy">Recent ratings come directly from booked and paid customer visits.</p>
+            </div>
+
+            <div class="review-layout">
+                <article class="surface-card review-summary-card">
+                    <span class="mini-label">Overall rating</span>
+                    <strong id="reviewAverage" class="review-average">0.0</strong>
+                    <div id="reviewStars" class="stars">?????</div>
+                    <p id="reviewCount" class="hint">0 verified reviews</p>
+                </article>
+
+                <article class="surface-card form-card review-form-card">
+                    <div class="compact-head">
+                        <div>
+                            <p class="eyebrow">Leave a review</p>
+                            <h2>Share your service experience</h2>
+                        </div>
+                        <p class="section-copy">Login, pay for a booking, then review it here.</p>
+                    </div>
+                    <form id="reviewForm" class="review-form">
+                        <select id="reviewBookingSelect" name="bookingId" required>
+                            <option value="">Choose a paid booking</option>
+                        </select>
+                        <div class="form-split compact-split">
+                            <select id="reviewRating" name="rating" required>
+                                <option value="">Rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Needs work</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                            <input type="text" name="title" placeholder="Short review title" required>
+                        </div>
+                        <textarea name="comment" rows="4" placeholder="Tell other customers what went well" required></textarea>
+                        <button class="primary-btn" type="submit">Submit review</button>
+                    </form>
+                </article>
+            </div>
+
+            <div id="reviewsGrid" class="review-grid"></div>
+        </section>
+
+        <section id="booking" class="section-shell section-block booking-layout">
+            <article class="surface-card form-card wide">
+                <div class="section-head compact-head">
+                    <div>
+                        <p class="eyebrow">Booking</p>
+                        <h2>Schedule your service</h2>
+                    </div>
+                    <p class="section-copy">Select a service, choose a convenient time, pick a payment option, and confirm the request in seconds.</p>
+                </div>
+
+                <form id="bookingForm">
+                    <select name="serviceId" id="serviceSelect" required>
+                        <option value="">Choose a service</option>
+                    </select>
+                    <div class="form-split booking-grid-3">
+                        <input type="datetime-local" name="appointmentTime" required>
+                        <input type="text" name="address" placeholder="Service address" required>
+                        <select name="paymentMethod" id="paymentMethodSelect" required>
+                            <option value="PAY_LATER">Pay later</option>
+                            <option value="CARD">Card</option>
+                            <option value="UPI">UPI</option>
+                            <option value="WALLET">Wallet</option>
+                            <option value="CASH">Cash</option>
+                        </select>
+                    </div>
+                    <textarea name="notes" rows="4" placeholder="Add issue details, location notes, or gate instructions"></textarea>
+                    <button class="primary-btn" type="submit">Confirm booking</button>
+                </form>
+            </article>
+
+            <div class="booking-column">
+                <article class="surface-card booking-summary-card">
+                    <div class="compact-head">
+                        <div>
+                            <p class="eyebrow">Booking summary</p>
+                            <h2>Live preview</h2>
+                        </div>
+                    </div>
+                    <div id="bookingSummary" class="summary-stack">
+                        <div>
+                            <span class="summary-label">Selected service</span>
+                            <strong>Choose a service to preview details</strong>
+                        </div>
+                        <div>
+                            <span class="summary-label">Estimated duration</span>
+                            <strong>--</strong>
+                        </div>
+                        <div>
+                            <span class="summary-label">Estimated total</span>
+                            <strong>Rs 0.00</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="surface-card bookings-card">
+                    <div class="compact-head">
+                        <div>
+                            <p class="eyebrow">My bookings</p>
+                            <h2>Manage appointments</h2>
+                        </div>
+                    </div>
+                    <div id="bookingsList" class="booking-list"></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="auth" class="section-shell dual-panel auth-panel">
+            <article class="surface-card form-card">
+                <h2>Login</h2>
+                <p class="hint">Sign in to book services, track appointments, and add reviews after payment.</p>
+                <form id="loginForm">
+                    <input type="email" name="email" placeholder="Email address" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button class="primary-btn" type="submit">Login</button>
+                </form>
+                <p class="hint">Demo admin: <code>admin@smartserve.com</code> / <code>admin123</code></p>
+            </article>
+
+            <article class="surface-card form-card">
+                <h2>Create account</h2>
+                <p class="hint">Create a customer account to book, pay, and review services.</p>
+                <form id="signupForm">
+                    <input type="text" name="fullName" placeholder="Full name" required>
+                    <input type="email" name="email" placeholder="Email address" required>
+                    <input type="tel" name="phone" placeholder="Phone number">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button class="primary-btn" type="submit">Create account</button>
+                </form>
+            </article>
+        </section>
+    </main>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+<script src="app.js?v=20260330d"></script>
+</body>
+</html>
